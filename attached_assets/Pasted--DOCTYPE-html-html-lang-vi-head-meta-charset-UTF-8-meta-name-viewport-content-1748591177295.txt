@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VoiceText Pro - Chuyển Văn Bản Thành Giọng Nói Miễn Phí</title>
+    <meta name="description" content="Ứng dụng chuyển văn bản thành giọng nói hàng đầu Việt Nam. Hỗ trợ đọc tiếng Việt tự nhiên, nhiều giọng đọc, tốc độ linh hoạt.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        /* Header & Navigation */
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 5px 0;
+            position: relative;
+        }
+
+        .nav-menu a:hover {
+            color: #ffd700;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: #ffd700;
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" fill="rgba(255,255,255,0.1)"><polygon points="0,0 1000,100 1000,0"/></svg>');
+            background-size: cover;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary {
+            background: #fff;
+            color: #667eea;
+            box-shadow: 0 8px 25px rgba(255,255,255,0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .section {
+            margin-bottom: 80px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 50px;
+        }
+
+        /* TTS Tool Section */
+        .tts-tool {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 1px solid #e9ecef;
+        }
+
+        .tool-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .text-area-section textarea {
+            width: 100%;
+            min-height: 300px;
+            padding: 20px;
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            font-size: 16px;
+            font-family: inherit;
+            resize: vertical;
+            transition: all 0.3s ease;
+        }
+
+        .text-area-section textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.1);
+        }
+
+        .controls-panel {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid #e9ecef;
+        }
+
+        .control-group {
+            margin-bottom: 25px;
+        }
+
+        .control-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .control-group select,
+        .control-group input[type="range"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            background: white;
+        }
+
+        .range-value {
+            text-align: center;
+            margin-top: 8px;
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .tool-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .status-bar {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 20px 0;
+            font-weight: 500;
+        }
+
+        /* Features Section */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid #f0f0f0;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+
+        /* How it works */
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .step-card {
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0 auto 20px;
+        }
+
+        /* Testimonials */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            border: 1px solid #f0f0f0;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 20px;
+            color: #ecf0f1;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section ul li a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: #3498db;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #34495e;
+            color: #bdc3c7;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .tool-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Voice Visualizer */
+        .voice-visualizer {
+            height: 60px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 1px solid #e9ecef;
+        }
+
+        .wave-bars {
+            display: flex;
+            gap: 3px;
+            align-items: center;
+        }
+
+        .wave-bar {
+            width: 4px;
+            height: 20px;
+            background: linear-gradient(to top, #667eea, #764ba2);
+            border-radius: 2px;
+            animation: wave 1.5s ease-in-out infinite;
+        }
+
+        .wave-bar:nth-child(2) { animation-delay: 0.1s; }
+        .wave-bar:nth-child(3) { animation-delay: 0.2s; }
+        .wave-bar:nth-child(4) { animation-delay: 0.3s; }
+        .wave-bar:nth-child(5) { animation-delay: 0.4s; }
+        .wave-bar:nth-child(6) { animation-delay: 0.5s; }
+        .wave-bar:nth-child(7) { animation-delay: 0.6s; }
+        .wave-bar:nth-child(8) { animation-delay: 0.7s; }
+
+        @keyframes wave {
+            0%, 100% { height: 20px; }
+            50% { height: 40px; }
+        }
+
+        .speaking .wave-bar {
+            animation: wave 0.5s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header class="header">
+        <nav class="nav-container">
+            <div class="logo">
+                🎤 VoiceText Pro
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home">Trang Chủ</a></li>
+                <li><a href="#tool">Công Cụ</a></li>
+                <li><a href="#features">Tính Năng</a></li>
+                <li><a href="#how-it-works">Hướng Dẫn</a></li>
+                <li><a href="#testimonials">Đánh Giá</a></li>
+                <li><a href="#contact">Liên Hệ</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Chuyển Văn Bản Thành Giọng Nói</h1>
+            <p>Công nghệ Text-to-Speech hàng đầu Việt Nam. Hỗ trợ đọc tiếng Việt tự nhiên, nhiều giọng đọc, hoàn toàn miễn phí.</p>
+            <div class="hero-buttons">
+                <a href="#tool" class="btn btn-primary">Bắt Đầu Ngay</a>
+                <a href="#features" class="btn btn-secondary">Tìm Hiểu Thêm</a>
+            </div>
+        </div>
+    </section>
+
+    <main class="main-content">
+        <!-- TTS Tool Section -->
+        <section class="section" id="tool">
+            <h2 class="section-title">🎤 Công Cụ Text-to-Speech</h2>
+            <p class="section-subtitle">Nhập văn bản và nghe ngay lập tức với giọng đọc tự nhiên</p>
+            
+            <div class="tts-tool">
+                <div class="tool-grid">
+                    <div class="text-area-section">
+                        <label for="textInput" style="display: block; font-weight: 600; margin-bottom: 15px; color: #2c3e50;">✍️ Nhập văn bản của bạn:</label>
+                        <textarea id="textInput" placeholder="Nhập văn bản cần chuyển thành giọng nói tại đây...
+
+Ví dụ: Xin chào! Đây là ứng dụng chuyển văn bản thành giọng nói hàng đầu Việt Nam. Chúng tôi hỗ trợ đọc tiếng Việt tự nhiên với nhiều giọng đọc khác nhau."></textarea>
+                    </div>
+
+                    <div class="controls-panel">
+                        <h3 style="margin-bottom: 20px; color: #2c3e50;">⚙️ Cài Đặt</h3>
+                        
+                        <div class="control-group">
+                            <label for="voiceSelect">🎤 Chọn giọng đọc:</label>
+                            <select id="voiceSelect">
+                                <option value="">Đang tải...</option>
+                            </select>
+                        </div>
+
+                        <div class="control-group">
+                            <label for="speedRange">⚡ Tốc độ đọc:</label>
+                            <input type="range" id="speedRange" min="0.1" max="3" step="0.1" value="1">
+                            <div class="range-value" id="speedValue">1.0x</div>
+                        </div>
+
+                        <div class="control-group">
+                            <label for="pitchRange">🎵 Cao độ:</label>
+                            <input type="range" id="pitchRange" min="0" max="2" step="0.1" value="1">
+                            <div class="range-value" id="pitchValue">1.0</div>
+                        </div>
+
+                        <div class="control-group">
+                            <label for="volumeRange">🔊 Âm lượng:</label>
+                            <input type="range" id="volumeRange" min="0" max="1" step="0.1" value="1">
+                            <div class="range-value" id="volumeValue">100%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="voice-visualizer" id="visualizer">
+                    <div class="wave-bars">
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                    </div>
+                </div>
+
+                <div class="status-bar" id="statusBar">
+                    Sẵn sàng chuyển văn bản thành giọng nói 🎯
+                </div>
+
+                <div class="tool-buttons">
+                    <button class="btn btn-primary" id="speakBtn" onclick="speakText()">
+                        🔊 Phát Âm
+                    </button>
+                    <button class="btn btn-secondary" id="pauseBtn" onclick="pauseSpeech()" disabled>
+                        ⏸️ Tạm Dừng
+                    </button>
+                    <button class="btn btn-secondary" id="stopBtn" onclick="stopSpeech()" disabled>
+                        ⏹️ Dừng
+                    </button>
+                    <button class="btn" onclick="clearText()" style="background: #6c757d; color: white;">
+                        🗑️ Xóa
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="section animate-on-scroll" id="features">
+            <h2 class="section-title">✨ Tính Năng Nổi Bật</h2>
+            <p class="section-subtitle">Khám phá những tính năng mạnh mẽ của VoiceText Pro</p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🇻🇳</div>
+                    <h3>Hỗ Trợ Tiếng Việt</h3>
+                    <p>Giọng đọc tiếng Việt tự nhiên, phát âm chuẩn với các vùng miền khác nhau.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎭</div>
+                    <h3>Nhiều Giọng Đọc</h3>
+                    <p>Lựa chọn từ hàng chục giọng đọc nam, nữ với phong cách khác nhau.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Tốc Độ Linh Hoạt</h3>
+                    <p>Điều chỉnh tốc độ đọc từ 0.1x đến 3x theo nhu cầu của bạn.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎵</div>
+                    <h3>Điều Chỉnh Âm Thanh</h3>
+                    <p>Tùy chỉnh cao độ và âm lượng để có trải nghiệm nghe tốt nhất.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Responsive Design</h3>
+                    <p>Hoạt động mượt mà trên mọi thiết bị: máy tính, tablet, điện thoại.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🆓</div>
+                    <h3>Hoàn Toàn Miễn Phí</h3>
+                    <p>Sử dụng tất cả tính năng mà không cần đăng ký hay thanh toán.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works -->
+        <section class="section animate-on-scroll" id="how-it-works">
+            <h2 class="section-title">🚀 Cách Sử Dụng</h2>
+            <p class="section-subtitle">Chỉ với 4 bước đơn giản</p>
+            
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3>Nhập Văn Bản</h3>
+                    <p>Dán hoặc nhập văn bản bạn muốn chuyển thành giọng nói vào ô text.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3>Chọn Giọng Đọc</h3>
+                    <p>Lựa chọn giọng đọc phù hợp từ danh sách các giọng có sẵn.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3>Điều Chỉnh Cài Đặt</h3>
+                    <p>Tùy chỉnh tốc độ, cao độ và âm lượng theo ý thích.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <h3>Nghe Kết Quả</h3>
+                    <p>Nhấn nút "Phát Âm" và thưởng thức giọng đọc tự nhiên.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section class="section animate-on-scroll" id="testimonials">
+            <h2 class="section-title">💬 Đánh Giá Từ Người Dùng</h2>
+            <p class="section-subtitle">Hàng nghìn người dùng tin tựa VoiceText Pro</p>
+            
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "VoiceText Pro đã giúp tôi rất nhiều trong việc học tiếng Anh. Giọng đọc rất tự nhiên và dễ nghe."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">AN</div>
+                        <div>
+                            <strong>Nguyễn Văn An</strong><br>
+                            <small>Học sinh</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "Công cụ tuyệt vời cho công việc của tôi. Tôi sử dụng để tạo audio cho các bài thuyết trình."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">ML</div>
+                        <div>
+                            <strong>Trần Thị Mai Linh</strong><br>
+                            <small>Giảng viên</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "Giao diện đẹp, dễ sử dụng và hoàn toàn miễn phí. Không thể tốt hơn được nữa!"
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">DH</div>
+                        <div>
+                            <strong>Lê Đức Hùng</strong><br>
+                            <small>Developer</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>🎤 VoiceText Pro</h3>
+                <p>Ứng dụng chuyển văn bản thành giọng nói hàng đầu Việt Nam. Mang đến trải nghiệm âm thanh tự nhiên và chất lượng cao.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Liên Kết Nhanh</h3>
+                <ul>
+                    <li><a href="#home">Trang Chủ</a></li>
+                    <li><a href="#tool">Công Cụ</a></li>
+                    <li><a href="#features">Tính Năng</a></li>
+                    <li><a href="#how-it-works">Hướng Dẫn</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Hỗ Trợ</h3>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Hướng Dẫn Chi Tiết</a></li>
+                    <li><a href="#">Báo Lỗi</a></li>
+                    <li><a href="#">Đóng Góp Ý Kiến</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Liên Hệ</h3>
+                <ul>
+                    <li>📧 support@voic

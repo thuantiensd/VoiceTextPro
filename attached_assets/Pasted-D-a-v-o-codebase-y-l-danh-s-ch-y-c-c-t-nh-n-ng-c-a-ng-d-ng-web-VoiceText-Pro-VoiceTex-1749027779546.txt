@@ -1,0 +1,91 @@
+Dựa vào codebase, đây là danh sách đầy đủ các tính năng của ứng dụng web VoiceText Pro:
+
+🎵 VoiceText Pro - Ứng dụng Web Text-to-Speech
+🏠 Trang chủ (Landing Page)
+Giao diện hiện đại với dark theme
+Giới thiệu tính năng chính
+Call-to-action để bắt đầu sử dụng
+🎙️ Tính năng Text-to-Speech chính
+Nhập văn bản: Ô text area lớn để nhập nội dung
+Chọn giọng nói: Dropdown với nhiều giọng khác nhau
+Điều chỉnh tốc độ: Slider để thay đổi tốc độ đọc
+Generate Audio: Tạo file âm thanh từ văn bản
+Play/Pause: Phát và tạm dừng audio
+Download: Tải file âm thanh về máy
+🔊 Hệ thống giọng nói
+OpenAI Voices: Alloy, Echo, Fable, Onyx, Nova, Shimmer
+Chất lượng cao: Giọng tự nhiên, rõ ràng
+Hỗ trợ đa ngôn ngữ: Tiếng Anh và tiếng Việt
+📁 Quản lý file audio
+Lịch sử audio: Xem tất cả file đã tạo
+Metadata: Hiển thị thông tin chi tiết file
+Storage: Lưu trữ và quản lý file audio
+📋 Hệ thống Templates
+Templates có sẵn: Các mẫu văn bản thông dụng
+Quick start: Nhanh chóng tạo audio từ template
+Danh mục: Phân loại theo chủ đề
+⚙️ Cài đặt ứng dụng
+Free limits: Giới hạn file và ký tự cho user miễn phí
+Configuration: Tùy chỉnh các thông số hệ thống
+User settings: Cài đặt cá nhân
+🔔 Hệ thống thông báo
+Real-time notifications: Thông báo thời gian thực
+Unread counter: Đếm số thông báo chưa đọc
+Notification history: Lịch sử thông báo
+👨‍💼 Admin Panel (Quản trị viên)
+Dashboard tổng quan:
+
+System metrics (CPU, RAM, Disk usage)
+User statistics
+Audio generation analytics
+Quản lý người dùng:
+
+Danh sách tất cả users
+Thông tin chi tiết từng user
+Quản lý quyền và trạng thái
+Quản lý audio files:
+
+Xem tất cả file audio trong hệ thống
+Thống kê usage theo user
+Quản lý storage
+Quản lý thanh toán:
+
+Payment history
+Transaction tracking
+Revenue analytics
+Activity Logs:
+
+Log tất cả hoạt động hệ thống
+Tracking user actions
+Security monitoring
+Support System:
+
+Ticket management
+User support requests
+FAQ management
+Notification Management:
+
+Tạo và gửi thông báo hệ thống
+Quản lý notification templates
+Broadcast messages
+🔐 Hệ thống bảo mật
+Session management: Quản lý phiên đăng nhập
+Role-based access: Phân quyền theo vai trò
+API security: Bảo mật endpoints
+📊 Analytics & Monitoring
+Usage tracking: Theo dõi sử dụng
+Performance metrics: Giám sát hiệu suất
+Error logging: Ghi nhận và xử lý lỗi
+🎨 Giao diện người dùng
+Responsive design: Tương thích mọi thiết bị
+Dark theme: Theme tối hiện đại
+Intuitive UI: Giao diện thân thiện, dễ sử dụng
+Loading states: Hiển thị trạng thái xử lý
+Error handling: Xử lý lỗi user-friendly
+🔧 Technical Features
+Real-time updates: Cập nhật thời gian thực
+File upload: Upload và xử lý file
+Audio streaming: Stream audio trực tiếp
+Cache management: Quản lý cache hiệu quả
+Database integration: Tích hợp PostgreSQL
+Ứng dụng hiện tại đã hoàn thiện với đầy đủ tính năng của một platform TTS chuyên nghiệp, bao gồm cả frontend user-friendly và backend admin panel mạnh mẽ.

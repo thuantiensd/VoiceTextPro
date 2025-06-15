@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: voicetext-pro
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: FPT_API_KEY
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+    autoDeploy: false
+
+databases:
+  - name: voicetext-pro-db
+    databaseName: voicetext_pro
+    user: voicetext_user
