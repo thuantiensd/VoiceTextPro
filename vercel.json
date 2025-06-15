@@ -4,11 +4,12 @@
   "devCommand": "npm run dev",
   "installCommand": "npm install",
   "framework": null,
-  "functions": {
-    "server/index.ts": {
-      "maxDuration": 30
+  "builds": [
+    {
+      "src": "server/index.ts",
+      "use": "@vercel/node"
     }
-  },
+  ],
   "routes": [
     {
       "src": "/api/(.*)",
